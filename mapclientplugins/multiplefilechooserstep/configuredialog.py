@@ -65,7 +65,7 @@ class ConfigureDialog(QtWidgets.QDialog):
     def _remove_clicked(self):
         for i in reversed(range(self._ui.listWidgetFiles.count())):
             item = self._ui.listWidgetFiles.item(i)
-            if self._ui.listWidgetFiles.isItemSelected(item):
+            if item.isSelected():
                 self._ui.listWidgetFiles.takeItem(i)
 
     def _add_clicked(self):
