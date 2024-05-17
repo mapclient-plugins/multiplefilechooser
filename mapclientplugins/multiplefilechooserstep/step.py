@@ -46,10 +46,7 @@ class MultipleFileChooserStep(WorkflowStepMountPoint):
         The index is the index of the port in the port list.  If there is only one
         provides port for this step then the index can be ignored.
         """
-        files = []
-        for file in self._config['files']:
-            files.append(os.path.realpath(os.path.join(self._location, file)))
-        return files  # http://physiomeproject.org/workflow/1.0/rdf-schema#multiple_file_locations
+        return [os.path.realpath(os.path.join(self._location, file)) for file in self._config['files']]
 
     def configure(self):
         """

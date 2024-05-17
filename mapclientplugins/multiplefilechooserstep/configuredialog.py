@@ -1,5 +1,6 @@
 import ntpath
 import os
+import pathlib
 import sys
 import webbrowser
 
@@ -132,11 +133,10 @@ class ConfigureDialog(QtWidgets.QDialog):
         identifier over the whole of the workflow.
         """
         self._previousIdentifier = self._ui.lineEditIdentifier.text()
-        config = {'identifier': self._ui.lineEditIdentifier.text()}
-        files = []
-        for i in range(self._ui.listWidgetFiles.count()):
-            files.append(self._ui.listWidgetFiles.item(i).text())
-        config['files'] = files
+        config = {
+            'identifier': self._ui.lineEditIdentifier.text(),
+            'files': [pathlib.PureWindowsPath(self._ui.listWidgetFiles.item(i).text()).as_posix() for i in range(self._ui.listWidgetFiles.count())]
+        }
 
         return config
 
@@ -148,4 +148,4 @@ class ConfigureDialog(QtWidgets.QDialog):
         """
         self._previousIdentifier = config['identifier']
         self._ui.lineEditIdentifier.setText(config['identifier'])
-        self._ui.listWidgetFiles.addItems(config['files'])
+        self._ui.listWidgetFiles.addItems([str(pathlib.PurePath(p)) for p in config['files']])
